@@ -1,6 +1,6 @@
 # ML Playground
 
-[![CI](https://github.com/shlokbhutani13/ml-regression-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/shlokbhutani13/ml-regression-demo/actions/workflows/ci.yml)
+[![CI](https://github.com/shlokbhutani13/ml-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/shlokbhutani13/ml-playground/actions/workflows/ci.yml)
 
 I built this package to understand how common machine-learning algorithms work beneath library APIs. Each estimator uses NumPy and keeps the training math close to the code.
 
@@ -22,8 +22,8 @@ The implementations favor readability and small datasets. They are useful for st
 Use Python 3.11 or newer:
 
 ```bash
-git clone https://github.com/shlokbhutani13/ml-regression-demo.git
-cd ml-regression-demo
+git clone https://github.com/shlokbhutani13/ml-playground.git
+cd ml-playground
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[dev]"
