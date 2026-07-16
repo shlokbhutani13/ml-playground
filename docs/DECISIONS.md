@@ -80,4 +80,4 @@ Tests will cover mathematical behavior rather than implementation details:
 - utility functions preserve shapes and reproducibility
 - unfitted and invalid-input paths raise clear errors
 
-Continuous integration will install the package and run tests, formatting checks, and type-aware static checks on a supported Python version.
+Continuous integration will install the package and run tests, lint checks, the deterministic example, and a package build on Python 3.12.
