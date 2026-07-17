@@ -6,6 +6,11 @@ I built this package to understand how common machine-learning algorithms work b
 
 The implementations favor readability and small datasets. They are useful for study, experiments, and interviews, but they are not replacements for scikit-learn in production work.
 
+## See it in action
+
+- [Project overview in my portfolio](https://shlokbhutani13.github.io/)
+- [Source code on GitHub](https://github.com/shlokbhutani13/ml-playground)
+
 ## Algorithms
 
 | Estimator | Task | Training approach | Main limitation |
