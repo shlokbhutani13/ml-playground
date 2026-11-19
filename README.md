@@ -2,59 +2,36 @@
 
 [![CI](https://github.com/shlokbhutani13/ml-playground/actions/workflows/ci.yml/badge.svg)](https://github.com/shlokbhutani13/ml-playground/actions/workflows/ci.yml)
 
-I built this package to understand how common machine-learning algorithms work beneath library APIs. Each estimator uses NumPy and keeps the training math close to the code.
+Six classic machine learning algorithms written from scratch in NumPy. I built it to understand what actually happens inside `model.fit()`, instead of only calling scikit-learn.
 
-The implementations favor readability and small datasets. They are useful for study, experiments, and interviews, but they are not replacements for scikit-learn in production work.
+The code favors readability over speed. It's good for learning and interview prep, not for production.
 
-## See it in action
+## The algorithms
 
-- [Project overview in my portfolio](https://shlokbhutani13.github.io/)
-- [Source code on GitHub](https://github.com/shlokbhutani13/ml-playground)
+| Algorithm | Used for | How it learns |
+| --- | --- | --- |
+| Linear regression | Predicting numbers | Gradient descent |
+| Logistic regression | Yes/no classification | Gradient descent on cross-entropy |
+| Perceptron | Yes/no classification | Updates on each mistake |
+| K-nearest neighbors | Classification | Votes from the closest examples |
+| K-means | Clustering | Lloyd's algorithm |
+| PCA | Shrinking dimensions | Eigenvectors of the covariance matrix |
 
-## Algorithms
+Each model keeps what it learned so you can inspect it: weights and loss history for the gradient descent models, mistakes per epoch for the perceptron, centers and inertia for k-means, and explained variance for PCA.
 
-| Estimator | Task | Training approach | Main limitation |
-| --- | --- | --- | --- |
-| `LinearRegressionGD` | Regression | Batch gradient descent | Requires learning-rate tuning |
-| `LogisticRegressionGD` | Binary classification | Cross-entropy gradient descent | Supports two classes |
-| `Perceptron` | Binary classification | Online mistake updates | Converges only on separable data |
-| `KNNClassifier` | Classification | Stores the training set | Prediction cost grows with the dataset |
-| `KMeans` | Clustering | Lloyd's algorithm | Sensitive to initialization |
-| `PCA` | Dimensionality reduction | Covariance eigendecomposition | Uses a dense covariance matrix |
+## Try it
 
-## Install
-
-Use Python 3.11 or newer:
+You need Python 3.11 or newer.
 
 ```bash
 git clone https://github.com/shlokbhutani13/ml-playground.git
 cd ml-playground
-python -m venv .venv
-source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
-```
-
-## Example
-
-```python
-import numpy as np
-
-from ml_playground import LinearRegressionGD
-
-X = np.array([[0.0], [1.0], [2.0], [3.0]])
-y = np.array([1.0, 3.0, 5.0, 7.0])
-
-model = LinearRegressionGD(lr=0.1, epochs=2_000).fit(X, y)
-print(model.predict([[4.0]]))
-```
-
-Run the full example:
-
-```bash
 python examples/demo.py
 ```
 
-Typical output:
+The demo runs every algorithm on fixed random data, so you get the same output each time:
 
 ```text
 Logistic accuracy: 1.000
@@ -65,37 +42,27 @@ K-means inertia: 391.295
 PCA explained variance: 0.946
 ```
 
-The example uses fixed random seeds, so the output stays stable across runs with the supported dependency range.
+Or use one model directly:
 
-## Learned attributes
+```python
+import numpy as np
+from ml_playground import LinearRegressionGD
 
-The fitted estimators expose the state that helps explain each algorithm:
+X = np.array([[0.0], [1.0], [2.0], [3.0]])
+y = np.array([1.0, 3.0, 5.0, 7.0])
 
-- gradient-descent models provide coefficients, intercepts, and loss history
-- the perceptron records mistakes per epoch
-- k-means reports centers, labels, inertia, and iteration count
-- PCA reports components and explained variance
+model = LinearRegressionGD(lr=0.1, epochs=2_000).fit(X, y)
+print(model.predict([[4.0]]))  # close to 9
+```
 
-All learned attributes use a trailing underscore, following the convention used by common Python ML libraries.
-
-## Verification
+## Tests
 
 ```bash
 ruff check .
 pytest
-python -m build
 ```
 
-The tests check known mathematical relationships, probability behavior, convergence, deterministic seeds, input validation, and unfitted-model errors.
-
-## Project structure
-
-```text
-src/ml_playground/   algorithm implementations
-tests/               mathematical and validation tests
-examples/demo.py     deterministic end-to-end example
-docs/DECISIONS.md    API and scope decisions
-```
+The tests check the math against known answers, make sure probabilities stay between 0 and 1, and confirm that bad inputs and unfitted models raise clear errors.
 
 ## License
 
